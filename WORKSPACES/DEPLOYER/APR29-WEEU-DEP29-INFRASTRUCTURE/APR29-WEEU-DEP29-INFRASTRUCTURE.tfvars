@@ -152,14 +152,15 @@ deployer_use_DHCP = true
 #
 # The deployer_image defines the Virtual machine image to use, if source_image_id is specified the deployment will use the custom image provided, in this case os_type must also be specified
 
+
 deployer_image = {
-  "type"            = "marketplace"
-  "os_type"         = "Linux"
-  "source_image_id" = ""
-  "publisher"       = "Canonical"
-  "offer"           = "0001-com-ubuntu-server-jammy"
-  "sku"             = "22_04-lts-gen2"
-  "version"         = "latest"
+  type            = "marketplace"
+  os_type         = "Linux"
+  source_image_id = ""
+  publisher       = "Canonical"
+  offer           = "ubuntu-24_04-lts",
+  sku             = "server",
+  version         = "latest"
 }
 
 # Use this field if you are using a marketplace image that has a plan attached to it
@@ -235,3 +236,7 @@ enable_firewall_for_keyvaults_and_storage = false
 
 # List of subnet IDs to add to storage account and key vault firewalls"
 #subnets_to_add_to_firewall_for_keyvaults_and_storage=["<azure_resource_id_for_subnet>"]
+
+# If defined, will add the Azure Application configuration to the control plane
+application_configuration_deployment = true
+
