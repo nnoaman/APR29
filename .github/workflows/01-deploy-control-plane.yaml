@@ -19,7 +19,7 @@ on:
         description: "Select the SAP Library to deploy"
         type: choice
         options:
-          - APR25-WEEU-SAP_LIBRARY
+          - APR29-WEEU-SAP_LIBRARY
       force_reset:
         description: 'Force a re-install - may require multiple re-runs'
         required: false
@@ -59,6 +59,7 @@ jobs:
         run: |
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           git config --global --add safe.directory "/__w/${{ github.event.repository.name }}/${{ github.event.repository.name }}"
+
       - name: Get app token
         id: get_workflow_token
         uses: peter-murray/workflow-application-token-action@v3
