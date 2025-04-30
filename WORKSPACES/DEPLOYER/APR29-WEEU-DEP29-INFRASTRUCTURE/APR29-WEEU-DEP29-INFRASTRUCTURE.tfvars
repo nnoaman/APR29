@@ -164,12 +164,12 @@ deployer_image = {
 }
 
 # Use this field if you are using a marketplace image that has a plan attached to it
-plan = {
-    "use"         = false
-    "name"      = ""
-    "publisher" = ""
-    "product"   = ""
-  }
+#plan = {
+#    "use"         = false
+#    "name"      = ""
+#    "publisher" = ""
+#    "product"   = ""
+#  }
 
 # deployer_diagnostics_account_arm_id defines the diagnosting storage account for the deployer
 # deployer_diagnostics_account_arm_id = ""
