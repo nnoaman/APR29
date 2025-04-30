@@ -154,13 +154,13 @@ deployer_use_DHCP = true
 
 
 deployer_image = {
-  type            = "marketplace"
-  os_type         = "Linux"
-  source_image_id = ""
-  publisher       = "Canonical"
-  offer           = "ubuntu-24_04-lts",
-  sku             = "server",
-  version         = "latest"
+  "type"            = "marketplace"
+  "os_type"         = "Linux"
+  "source_image_id" = ""
+  "publisher"       = "Canonical"
+  "offer"           = "0001-com-ubuntu-server-jammy"
+  "sku"             = "22_04-lts-gen2"
+  "version"         = "latest"
 }
 
 # Use this field if you are using a marketplace image that has a plan attached to it
