@@ -240,3 +240,4 @@ enable_firewall_for_keyvaults_and_storage = true
 # If defined, will add the Azure Application configuration to the control plane
 application_configuration_deployment = true
 
+custom_random_id="194"

@@ -9,3 +9,5 @@ dns_label = "azure.sapcontoso.com"
 
 # use_private_endpoint defines that the storage accounts and key vaults have private endpoints enabled
 use_private_endpoint = false
+
+custom_random_id="194"
