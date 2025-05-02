@@ -30,7 +30,8 @@ location = "westeurope"
 #resourcegroup_arm_id=""
 
 resourcegroup_tags = {
-  Control_plane = "westeurope"
+  "Control_plane" = "westeurope",
+  "Owner"         = "TBC"
 }
 
 #########################################################################################
