@@ -43,7 +43,7 @@ jobs:
     environment: ${{ inputs.control_plane_name }}
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/nnoaman/sap-automation:github-actions-v2
+      image: ghcr.io/nnoaman/sap-automation:kimmos_playground
     outputs:
       this_agent: ${{ steps.prepare_control_plane.outputs.this_agent }}
       deployer_keyvault: ${{ steps.prepare_control_plane.outputs.deployer_keyvault }}
@@ -95,6 +95,7 @@ jobs:
           ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           WEB_APP_CLIENT_SECRET: ${{ secrets.WEB_APP_CLIENT_SECRET }}
           TF_VAR_agent_pool: 'Default'
+          TF_VAR_spn_id: ${{ secrets.AZURE_CLIENT_ID }}
           TF_VAR_ansible_core_version: ${{ env.ANSIBLE_CORE_VERSION }}
           TF_VAR_tf_version: ${{ env.TF_VERSION }}
           TF_VAR_app_registration_app_id: ${{ secrets.APP_REGISTRATION_APP_ID }}
