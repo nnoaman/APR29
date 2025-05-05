@@ -242,3 +242,6 @@ enable_firewall_for_keyvaults_and_storage = true
 application_configuration_deployment = true
 
 custom_random_id="194"
+
+
+enable_rbac_authorization_for_keyvault = true
