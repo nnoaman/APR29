@@ -124,10 +124,11 @@ jobs:
           cd ${SAP_AUTOMATION_REPO_PATH}
           bash deploy/scripts/pipeline_scripts/v2/00-store-secrets-in-keyvault.sh
         env:
-          CONTROL_PLANE_NAME: ${{ inputs.control_plane_name }}
-          DEPLOYER_KEYVAULT: ${{ needs.prepare-deployer.outputs.deployer_keyvault }}
+          APP_CONFIGURATION_NAME:  ${{ env.APP_CONFIGURATION_NAME }}
           CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          CONTROL_PLANE_NAME: ${{ inputs.control_plane_name }}
+          DEPLOYER_KEYVAULT: ${{ needs.prepare-deployer.outputs.deployer_keyvault }}
           OBJECT_ID: ${{ secrets.AZURE_OBJECT_ID }}
           TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           TF_VAR_agent_pool: 'Default'
