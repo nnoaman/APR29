@@ -62,7 +62,7 @@ jobs:
 
       - name: Get app token
         id: get_workflow_token
-        uses: peter-murray/workflow-application-token-action@v3
+        uses: peter-murray/workflow-application-token-action@v4
         with:
           application_id: ${{ secrets.APPLICATION_ID }}
           application_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
@@ -94,6 +94,7 @@ jobs:
           TF_VAR_ansible_core_version: ${{ env.ANSIBLE_CORE_VERSION }}
           TF_VAR_tf_version: ${{ env.TF_VERSION }}
           TF_VAR_app_registration_app_id: ${{ secrets.APP_REGISTRATION_APP_ID }}
+          TF_VAR_APP_TOKEN: ${{ steps.get_workflow_token.outputs.token }}
 
   populate-keyvault:
     name: Save Deployment Credentials in Azure Keyvault
