@@ -241,7 +241,8 @@ enable_firewall_for_keyvaults_and_storage = true
 # If defined, will add the Azure Application configuration to the control plane
 application_configuration_deployment = true
 
-custom_random_id="194"
 
 
 enable_rbac_authorization_for_keyvault = true
+# The parameter 'custom_random_id' can be used to control the random 3 digits at the end of the storage accounts and key vaults
+custom_random_id="194"
