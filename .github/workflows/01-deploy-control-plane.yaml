@@ -84,6 +84,7 @@ jobs:
           bash deploy/scripts/pipeline_scripts/v2/01-control-plane-prepare.sh
         env:
           CONTROL_PLANE_NAME: ${{ inputs.control_plane_name }}
+          APPLICATION_CONFIGURATION_NAME: ${{ vars.APPLICATION_CONFIGURATION_NAME }}
           FORCE_RESET: ${{ inputs.force_reset }}
           IS_PIPELINE_DEPLOYMENT: true
           ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
