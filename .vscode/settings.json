@@ -1,4 +1,5 @@
 {
   "files.trimTrailingWhitespace": true,
-  "files.insertFinalNewline": true
+  "files.insertFinalNewline": true,
+  "ansible.python.interpreterPath": "c:\\Users\\kimforss\\AppData\\Local\\Microsoft\\WindowsApps\\python3.12.exe"
 }

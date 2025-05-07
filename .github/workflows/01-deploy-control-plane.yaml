@@ -133,7 +133,7 @@ jobs:
           cd ${SAP_AUTOMATION_REPO_PATH}
           bash deploy/scripts/pipeline_scripts/v2/00-store-secrets-in-keyvault.sh
         env:
-          APP_CONFIGURATION_NAME: ${{ needs.prepare-deployer.outputs.app_config_name }}
+          APPLICATION_CONFIGURATION_NAME: ${{ needs.prepare-deployer.outputs.app_config_name }}
           APP_TOKEN: ${{ steps.get_workflow_token.outputs.token }}
           CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
@@ -183,7 +183,7 @@ jobs:
           cd ${SAP_AUTOMATION_REPO_PATH}
           bash ./sap-automation/deploy/scripts/pipeline_scripts/v2/01-control-plane-deploy.sh
         env:
-          APP_CONFIGURATION_NAME: ${{ needs.prepare-deployer.outputs.app_config_name }}
+          APPLICATION_CONFIGURATION_NAME: ${{ needs.prepare-deployer.outputs.app_config_name }}
           APP_TOKEN: ${{ steps.get_workflow_token.outputs.token }}
           CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
