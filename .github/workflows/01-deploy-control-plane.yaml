@@ -47,6 +47,7 @@ jobs:
     outputs:
       this_agent: ${{ steps.prepare_control_plane.outputs.this_agent }}
       deployer_keyvault: ${{ steps.prepare_control_plane.outputs.deployer_keyvault }}
+      app_config_name: ${{ steps.prepare_control_plane.outputs.app_config_name }}
 
     steps:
       - name: Checkout the code
@@ -111,7 +112,7 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
-  
+
       - name: Get app token
         id: get_workflow_token
         uses: peter-murray/workflow-application-token-action@v4
@@ -132,7 +133,7 @@ jobs:
           cd ${SAP_AUTOMATION_REPO_PATH}
           bash deploy/scripts/pipeline_scripts/v2/00-store-secrets-in-keyvault.sh
         env:
-          APP_CONFIGURATION_NAME:  ${{ env.APP_CONFIGURATION_NAME }}
+          APP_CONFIGURATION_NAME: ${{ needs.prepare-deployer.outputs.app_config_name }}
           APP_TOKEN: ${{ steps.get_workflow_token.outputs.token }}
           CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
@@ -144,6 +145,7 @@ jobs:
           TF_VAR_ansible_core_version: ${{ env.ANSIBLE_CORE_VERSION }}
           TF_VAR_app_registration_app_id: ${{ secrets.APP_REGISTRATION_APP_ID }}
           TF_VAR_tf_version: ${{ env.TF_VERSION }}
+          TF_VAR_APP_TOKEN: ${{ steps.get_workflow_token.outputs.token }}
           USE_MSI: ${{ env.USE_MSI }}
           ZONE: ${{ inputs.control_plane_name }}
 
@@ -181,15 +183,18 @@ jobs:
           cd ${SAP_AUTOMATION_REPO_PATH}
           bash ./sap-automation/deploy/scripts/pipeline_scripts/v2/01-control-plane-deploy.sh
         env:
+          APP_CONFIGURATION_NAME: ${{ needs.prepare-deployer.outputs.app_config_name }}
+          APP_TOKEN: ${{ steps.get_workflow_token.outputs.token }}
+          CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          CONTROL_PLANE_NAME: ${{ inputs.control_plane_name }}
+          DEPLOYER_KEYVAULT: ${{ needs.prepare-deployer.outputs.deployer_keyvault }}
           APP_REGISTRATION_APP_ID: ${{ secrets.APP_REGISTRATION_APP_ID }}
           CONFIG_REPO_PATH: ${{ github.workspace }}/${{ inputs.config_repo_path }}
-          CONTROL_PLANE_NAME: ${{ inputs.control_plane_name }}
           DEPLOYER_TFSTATE_KEY: "${{ inputs.control_plane_name }}-INFRASTRUCTURE.terraform.tfstate"
-          DEPLOYER_KEYVAULT: ${{ needs.prepare-deployer.outputs.deployer_keyvault }}
           FORCE_RESET: ${{ inputs.force_reset }}
           IS_PIPELINE_DEPLOYMENT: true
           OBJECT_ID: ${{ secrets.AZURE_OBJECT_ID }}
-          CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           ARM_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
           SAP_AUTOMATION_REPO_PATH: ${{ github.workspace }}/${{ inputs.sap_automation_repo_path }}
           TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
