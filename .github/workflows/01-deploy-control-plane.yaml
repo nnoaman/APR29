@@ -48,6 +48,7 @@ jobs:
       this_agent: ${{ steps.prepare_control_plane.outputs.this_agent }}
       deployer_keyvault: ${{ steps.prepare_control_plane.outputs.deployer_keyvault }}
       app_config_name: ${{ steps.prepare_control_plane.outputs.app_config_name }}
+      msi_id: ${{ steps.prepare_control_plane.outputs.msi_id }}
 
     steps:
       - name: Checkout the code
@@ -152,6 +153,7 @@ jobs:
 
   deploy-control-plane:
     name: Deploy Control Plane
+    environment: ${{ inputs.control_plane_name }}
     needs: [prepare-deployer, populate-keyvault]
     runs-on: ${{ needs.prepare-deployer.outputs.this_agent || 'ubuntu-latest' }}
     outputs:
