@@ -157,6 +157,8 @@ jobs:
     environment: ${{ inputs.control_plane_name }}
     needs: [prepare-deployer, populate-keyvault]
     runs-on: ${{ needs.prepare-deployer.outputs.this_agent || 'ubuntu-latest' }}
+    container:
+      image: ghcr.io/nnoaman/sap-automation:kimmos_playground
     outputs:
       HAS_WEBAPP: ${{ steps.get_webapp_variables.outputs.HAS_WEBAPP }}
       APPSERVICE_NAME: ${{ steps.get_webapp_variables.outputs.APPSERVICE_NAME }}
