@@ -205,13 +205,11 @@ jobs:
           CONTROL_PLANE_NAME: ${{ inputs.control_plane_name }}
           DEPLOYER_KEYVAULT: ${{ vars.DEPLOYER_KEYVAULT }}
           APP_REGISTRATION_APP_ID: ${{ secrets.APP_REGISTRATION_APP_ID }}
-          CONFIG_REPO_PATH: ${{ github.workspace }}/${{ inputs.config_repo_path }}
           DEPLOYER_TFSTATE_KEY: "${{ inputs.control_plane_name }}-INFRASTRUCTURE.terraform.tfstate"
           FORCE_RESET: ${{ inputs.force_reset }}
           IS_PIPELINE_DEPLOYMENT: true
           OBJECT_ID: ${{ secrets.AZURE_OBJECT_ID }}
           ARM_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
-#          SAP_AUTOMATION_REPO_PATH: ${{ github.workspace }}/${{ inputs.sap_automation_repo_path }}
           TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           TF_VAR_agent_pool: 'Default'
           TF_VAR_ansible_core_version: ${{ env.ANSIBLE_CORE_VERSION }}
@@ -227,7 +225,6 @@ jobs:
           bash ./sap-automation/deploy/scripts/pipeline_scripts/01-webapp-variables.sh
         env:
           CONTROL_PLANE_NAME: ${{ inputs.control_plane_name }}
-          CONFIG_REPO_PATH: ${{ github.workspace }}/${{ inputs.config_repo_path }}
 
   deploy-web-app:
     name: Deploy SAP Configuration Web App
