@@ -164,10 +164,19 @@ jobs:
       APPSERVICE_NAME: ${{ steps.get_webapp_variables.outputs.APPSERVICE_NAME }}
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout the code
         uses: actions/checkout@v4
         with:
-          path: sap-automation
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get app token
+        id: get_workflow_token
+        uses: peter-murray/workflow-application-token-action@v4
+        with:
+          application_id: ${{ secrets.APPLICATION_ID }}
+          application_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
+          #organization: ${{ github.repository_owner }}
 
       - name: Azure Login with Service Principal
         if: ${{ vars.USE_MSI != 'true' }}
