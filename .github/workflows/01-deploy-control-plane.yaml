@@ -155,13 +155,10 @@ jobs:
   deploy-control-plane:
     name: Deploy Control Plane
     environment: ${{ inputs.control_plane_name }}
-    needs: [prepare-deployer, populate-keyvault]
+    needs: prepare-deployer
     runs-on: ${{ needs.prepare-deployer.outputs.this_agent || 'ubuntu-latest' }}
     container:
       image: ghcr.io/nnoaman/sap-automation:kimmos_playground
-    outputs:
-      HAS_WEBAPP: ${{ steps.get_webapp_variables.outputs.HAS_WEBAPP }}
-      APPSERVICE_NAME: ${{ steps.get_webapp_variables.outputs.APPSERVICE_NAME }}
 
     steps:
       - name: Checkout the code
@@ -183,10 +180,40 @@ jobs:
         uses: Azure/Login@v2
         with:
           creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}"}'
+    # environment: ${{ inputs.control_plane_name }}
+    # needs: [prepare-deployer, populate-keyvault]
+    # runs-on: ${{ needs.prepare-deployer.outputs.this_agent || 'ubuntu-latest' }}
+    # container:
+    #   image: ghcr.io/nnoaman/sap-automation:kimmos_playground
+    # outputs:
+    #   HAS_WEBAPP: ${{ steps.get_webapp_variables.outputs.HAS_WEBAPP }}
+    #   APPSERVICE_NAME: ${{ steps.get_webapp_variables.outputs.APPSERVICE_NAME }}
+
+    # steps:
+    #   - name: Checkout the code
+    #     uses: actions/checkout@v4
+    #     with:
+    #       fetch-depth: 0
+    #       token: ${{ secrets.GITHUB_TOKEN }}
+
+    #   - name: Get app token
+    #     id: get_workflow_token
+    #     uses: peter-murray/workflow-application-token-action@v4
+    #     with:
+    #       application_id: ${{ secrets.APPLICATION_ID }}
+    #       application_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
+    #       #organization: ${{ github.repository_owner }}
+
+    #   - name: Azure Login with Service Principal
+    #     if: ${{ vars.USE_MSI != 'true' }}
+    #     uses: Azure/Login@v2
+    #     with:
+    #       creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}"}'
 
       - name: Deploy Control Plane
         run: |
           echo "Running control plane deployment"
+          echo ${SAP_AUTOMATION_REPO_PATH}
           cd ${SAP_AUTOMATION_REPO_PATH}
           ls -lart
           ls -lart deploy/scripts/pipeline_scripts/v2
