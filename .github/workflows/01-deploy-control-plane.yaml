@@ -179,7 +179,7 @@ jobs:
         run: |
           echo "Running control plane deployment"
           cd ${SAP_AUTOMATION_REPO_PATH}
-          bash ./sap-automation/deploy/scripts/pipeline_scripts/v2/01-control-plane-deploy.sh
+          bash deploy/scripts/pipeline_scripts/v2/01-control-plane-deploy.sh
         env:
           APPLICATION_CONFIGURATION_NAME: ${{ vars.APPLICATION_CONFIGURATION_NAME }}
           APP_TOKEN: ${{ steps.get_workflow_token.outputs.token }}
