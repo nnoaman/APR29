@@ -60,7 +60,7 @@ jobs:
       - name: Configure Git Safe Directory
         run: |
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
-          git config --global --add safe.directory "/__w/${{ github.event.repository.name }}/${{ github.event.repository.name }}"
+          git config --global --add safe.directory "/__w/${{ github.event.repository.name }}"
 
       - name: Get app token
         id: get_workflow_token
@@ -84,6 +84,7 @@ jobs:
           bash deploy/scripts/pipeline_scripts/v2/01-control-plane-prepare.sh
         env:
           CONTROL_PLANE_NAME: ${{ inputs.control_plane_name }}
+          CONFIG_REPO_PATH: "/__w/${{ github.event.repository.name }}/WORKSPACES"
           APPLICATION_CONFIGURATION_NAME: ${{ vars.APPLICATION_CONFIGURATION_NAME }}
           FORCE_RESET: ${{ inputs.force_reset }}
           IS_PIPELINE_DEPLOYMENT: true
