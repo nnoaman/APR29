@@ -145,6 +145,7 @@ jobs:
           OBJECT_ID: ${{ secrets.AZURE_OBJECT_ID }}
           TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           TF_VAR_agent_pool: 'Default'
+          TF_VAR_github_app_token: ${{ steps.get_workflow_token.outputs.token }}
           TF_VAR_ansible_core_version: ${{ env.ANSIBLE_CORE_VERSION }}
           TF_VAR_app_registration_app_id: ${{ secrets.APP_REGISTRATION_APP_ID }}
           TF_VAR_tf_version: ${{ env.TF_VERSION }}
@@ -213,6 +214,7 @@ jobs:
           TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           TEST_ONLY: ${{ inputs.test }}
           TF_VAR_agent_pool: 'Default'
+          TF_VAR_github_app_token: ${{ steps.get_workflow_token.outputs.token }}
           TF_VAR_ansible_core_version: ${{ env.ANSIBLE_CORE_VERSION }}
           TF_VAR_app_registration_app_id: ${{ secrets.APP_REGISTRATION_APP_ID }}
           TF_VAR_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
