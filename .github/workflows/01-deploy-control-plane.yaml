@@ -14,14 +14,13 @@ on:
         description: 'Control Plane Name, use the following syntax: ENV-LOCA-VNET'
         required: true
         type: environment
-      library:
-        default: MGMT-NOEU-SAP_LIBRARY
-        description: "Select the SAP Library to deploy"
-        type: choice
-        options:
-          - APR29-WEEU-SAP_LIBRARY
       force_reset:
         description: 'Force a re-install - may require multiple re-runs'
+        required: false
+        type: boolean
+        default: false
+      test:
+        description: 'Only run terraform plan'
         required: false
         type: boolean
         default: false
@@ -92,6 +91,7 @@ jobs:
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           WEB_APP_CLIENT_SECRET: ${{ secrets.WEB_APP_CLIENT_SECRET }}
+          TEST_ONLY: ${{ inputs.test }}
           TF_VAR_agent_pool: 'Default'
           TF_VAR_spn_id: ${{ secrets.AZURE_CLIENT_ID }}
           TF_VAR_ansible_core_version: ${{ env.ANSIBLE_CORE_VERSION }}
@@ -211,6 +211,7 @@ jobs:
           OBJECT_ID: ${{ secrets.AZURE_OBJECT_ID }}
           ARM_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
           TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          TEST_ONLY: ${{ inputs.test }}
           TF_VAR_agent_pool: 'Default'
           TF_VAR_ansible_core_version: ${{ env.ANSIBLE_CORE_VERSION }}
           TF_VAR_app_registration_app_id: ${{ secrets.APP_REGISTRATION_APP_ID }}
