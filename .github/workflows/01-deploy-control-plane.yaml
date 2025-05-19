@@ -201,6 +201,7 @@ jobs:
         env:
           APPLICATION_CONFIGURATION_NAME: ${{ vars.APPLICATION_CONFIGURATION_NAME }}
           APP_TOKEN: ${{ steps.get_workflow_token.outputs.token }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
           CONTROL_PLANE_NAME: ${{ inputs.control_plane_name }}
