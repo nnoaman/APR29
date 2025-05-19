@@ -211,7 +211,6 @@ jobs:
           FORCE_RESET: ${{ inputs.force_reset }}
           IS_PIPELINE_DEPLOYMENT: true
           OBJECT_ID: ${{ secrets.AZURE_OBJECT_ID }}
-          ARM_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
           TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           TEST_ONLY: ${{ inputs.test }}
           TF_VAR_agent_pool: 'Default'
