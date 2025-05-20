@@ -244,16 +244,18 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '8.0.x'
+          dotnet-version: '7.0.x'
 
       - name: Build Web Application
         run: |
           dotnet build "${{ github.workspace }}/sap-automation/Webapp/SDAF/*.csproj"
+
       - name: Publish Web Application
         run: |
           dotnet publish "${{ github.workspace }}/sap-automation/Webapp/SDAF/*.csproj" --output webapp-publish --configuration Release
           cd webapp-publish
           zip -r ../webapp.zip *
+
       - name: Azure Login with Service Principal
         if: ${{ vars.USE_MSI != 'true' }}
         uses: Azure/Login@v2
@@ -278,6 +280,7 @@ jobs:
             'SourceBranch=${{ github.ref_name }}' \
             'IS_PIPELINE_DEPLOYMENT=true' \
             'CONTROL_PLANE_NAME=${{ inputs.control_plane_name }}'
+
       - name: Document Web App Configuration Steps
         run: |
           echo "Web App Configuration Steps"
@@ -285,4 +288,4 @@ jobs:
           bash ./sap-automation/deploy/scripts/pipeline_scripts/01-webapp-configuration.sh
         env:
           CONTROL_PLANE_NAME: ${{ inputs.control_plane_name }}
-          APP_REGISTRATION_APP_ID: ${{ secrets.APP_REGISTRATION_APP_ID }}
+          APP_REGISTRATION_APP_ID: ${{ env.APP_REGISTRATION_APP_ID }}
