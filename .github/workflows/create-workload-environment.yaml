@@ -86,12 +86,22 @@ jobs:
           echo ${url_to_call}
 
           gh variable list --env ${workload_config_environment_name}
-
-          gh api \
+          _=$(gh api \
             -X PUT \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            ${url_to_call}
+            ${url_to_call})
+
+          # Set secrets
+          gh secret set ARM_CLIENT_ID --body "${{ secrets.AZURE_CLIENT_ID }}" --env ${workload_config_environment_name}
+          gh secret set ARM_CLIENT_SECRET --body "${{ secrets.AZURE_CLIENT_SECRET }}" --env ${workload_config_environment_name}
+          gh secret set ARM_SUBSCRIPTION_ID --body "${{ secrets.AZURE_SUBSCRIPTION_ID }}" --env ${workload_config_environment_name}
+          gh secret set ARM_TENANT_ID --body "${{ secrets.AZURE_TENANT_ID }}" --env ${workload_config_environment_name}
+          gh secret set ARM_OBJECT_ID --body "${{ secrets.AZURE_OBJECT_ID }}" --env ${workload_config_environment_name}
+
+          # Set variables
+          gh variable set APPLICATION_CONFIGURATION_NAME --body "${{ vars.APPLICATION_CONFIGURATION_NAME }}" --env ${workload_config_environment_name}
+          gh variable set DEPLOYER_KEYVAULT --body "${{ vars.DEPLOYER_KEYVAULT }}" --env ${workload_config_environment_name}
 
           # Add WORKSPACES file
           mkdir -p WORKSPACES/LANDSCAPE/${workload_config_name^^}
@@ -107,16 +117,15 @@ jobs:
           git config --global user.email "sap-automation-deployer@noreply.github.com"
 
           git add WORKSPACES
-          git commit -m "Add WORKSPACES for ${workload_config_environment_name^^}"
-          git push
 
-          # Set secrets
-          gh secret set ARM_CLIENT_ID --body "${{ secrets.AZURE_CLIENT_ID }}" --env ${workload_config_environment_name}
-          gh secret set ARM_CLIENT_SECRET --body "${{ secrets.AZURE_CLIENT_SECRET }}" --env ${workload_config_environment_name}
-          gh secret set ARM_SUBSCRIPTION_ID --body "${{ secrets.AZURE_SUBSCRIPTION_ID }}" --env ${workload_config_environment_name}
-          gh secret set ARM_TENANT_ID --body "${{ secrets.AZURE_TENANT_ID }}" --env ${workload_config_environment_name}
-          gh secret set ARM_OBJECT_ID --body "${{ secrets.AZURE_OBJECT_ID }}" --env ${workload_config_name}
+          if git commit -m "Add WORKSPACES for ${workload_config_name^^}" ; then
+            echo "Changes committed successfully."
+            if git push --force-with-lease ; then
+              echo "Pushed changes to the repository."
+            else
+              echo "Failed to push changes to the repository."
+            fi
 
-          # Set variables
-          gh variable set APP_CONFIGURATION_NAME --body "${{ vars.APP_CONFIGURATION_NAME }}" --env ${workload_config_environment_name}
-          gh variable set DEPLOYER_KEYVAULT --body "${{ vars.DEPLOYER_KEYVAULT }}" --env ${workload_config_environment_name}
+          else
+            echo "No changes to commit."
+          fi
