@@ -193,10 +193,7 @@ jobs:
       - name: Deploy Control Plane
         run: |
           echo "Running control plane deployment"
-          echo ${SAP_AUTOMATION_REPO_PATH}
           cd ${SAP_AUTOMATION_REPO_PATH}
-          ls -lart
-          ls -lart deploy/scripts/pipeline_scripts/v2
           bash deploy/scripts/pipeline_scripts/v2/01-control-plane-deploy.sh
         env:
           APPLICATION_CONFIGURATION_NAME: ${{ vars.APPLICATION_CONFIGURATION_NAME }}
@@ -225,7 +222,8 @@ jobs:
       - name: Get Web App Variables
         id: get_webapp_variables
         run: |
-          bash ./sap-automation/deploy/scripts/pipeline_scripts/v2/01-webapp-variables.sh
+          cd ${SAP_AUTOMATION_REPO_PATH}
+          bash deploy/scripts/pipeline_scripts/v2/01-webapp-variables.sh
         env:
           CONTROL_PLANE_NAME: ${{ inputs.control_plane_name }}
 
