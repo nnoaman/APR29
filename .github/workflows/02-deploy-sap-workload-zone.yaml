@@ -93,6 +93,7 @@ jobs:
   deploy_sap_workload_zone:
     name: Deploy SAP Workload Zone
     environment: ${{ inputs.workload_zone_name }}
+    needs: [populate-keyvault]
     runs-on: self-hosted
     container:
       image: ghcr.io/nnoaman/sap-automation:kimmos_playground
