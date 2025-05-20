@@ -42,8 +42,7 @@ jobs:
   populate-keyvault:
     name: Save Deployment Credentials in Azure Keyvault
     environment: ${{ inputs.workload_zone }}
-    needs: prepare-deployer
-    runs-on: ${{ needs.prepare-deployer.outputs.this_agent || 'ubuntu-latest' }}
+    runs-on: self-hosted
     container:
       image: ghcr.io/nnoaman/sap-automation:kimmos_playground
 
@@ -96,7 +95,7 @@ jobs:
     environment: ${{ inputs.workload_zone_name }}
     runs-on: self-hosted
     container:
-      image: ghcr.io/nnoaman/sap-automation:github_actions
+      image: ghcr.io/nnoaman/sap-automation:kimmos_playground
     steps:
       - name: Checkout the code
         uses: actions/checkout@v4
@@ -114,7 +113,7 @@ jobs:
       - name: Azure Login
         uses: Azure/Login@v2
         with:
-          creds: '{"clientId":"${{ secrets.WL_ARM_CLIENT_ID }}","clientSecret":"${{ secrets.WL_ARM_CLIENT_SECRET }}","subscriptionId":"${{ secrets.WL_ARM_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.WL_ARM_TENANT_ID }}"}'
+          creds: '{"clientId":"${{ secrets.ARM_CLIENT_ID }}","clientSecret":"${{ secrets.ARM_CLIENT_SECRET }}","subscriptionId":"${{ secrets.ARM_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.ARM_TENANT_ID }}"}'
 
       - name: Deploy SAP Workload Zone
         run: |

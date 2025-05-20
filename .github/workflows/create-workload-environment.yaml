@@ -82,10 +82,12 @@ jobs:
           workload_config_environment_name=${environment}-${region_map}-${workload_vnet}
           url_to_call=/repos/${{ github.repository }}/environments/${workload_config_environment_name^^}
 
+          echo "Creating workload environment: ${workload_config_environment_name^^}"
+          echo ${url_to_call}
+
           gh variable list --env ${workload_config_environment_name}
 
-          echo "Creating environment: ${workload_config_environment_name^^}"
-          _=$(gh api \
+          gh api \
             -X PUT \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
