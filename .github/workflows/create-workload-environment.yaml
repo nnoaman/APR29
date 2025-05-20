@@ -85,7 +85,6 @@ jobs:
           echo "Creating workload environment: ${workload_config_environment_name^^}"
           echo ${url_to_call}
 
-          gh variable list --env ${workload_config_environment_name}
           _=$(gh api \
             -X PUT \
             -H "Accept: application/vnd.github+json" \
@@ -104,6 +103,8 @@ jobs:
           # Set variables
           gh variable set APPLICATION_CONFIGURATION_NAME --body "${{ vars.APPLICATION_CONFIGURATION_NAME }}" --env ${workload_config_environment_name}
           gh variable set DEPLOYER_KEYVAULT --body "${{ vars.DEPLOYER_KEYVAULT }}" --env ${workload_config_environment_name}
+
+          gh variable list --env ${workload_config_environment_name}
 
           # Add WORKSPACES file
           mkdir -p WORKSPACES/LANDSCAPE/${workload_config_name^^}
