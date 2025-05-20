@@ -104,8 +104,6 @@ jobs:
           gh variable set APPLICATION_CONFIGURATION_NAME --body "${{ vars.APPLICATION_CONFIGURATION_NAME }}" --env ${workload_config_environment_name}
           gh variable set DEPLOYER_KEYVAULT --body "${{ vars.DEPLOYER_KEYVAULT }}" --env ${workload_config_environment_name}
 
-          gh variable list --env ${workload_config_environment_name}
-
           # Add WORKSPACES file
           mkdir -p WORKSPACES/LANDSCAPE/${workload_config_name^^}
 
