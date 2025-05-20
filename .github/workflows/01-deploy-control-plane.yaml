@@ -223,8 +223,6 @@ jobs:
         id: get_webapp_variables
         run: |
           cd ${SAP_AUTOMATION_REPO_PATH}
-          ls -lart
-          ls -lart deploy/scripts/pipeline_scripts
           bash deploy/scripts/pipeline_scripts/01-webapp-variables.sh
         env:
           CONTROL_PLANE_NAME: ${{ inputs.control_plane_name }}
