@@ -225,7 +225,7 @@ jobs:
       - name: Get Web App Variables
         id: get_webapp_variables
         run: |
-          bash ./sap-automation/deploy/scripts/pipeline_scripts/01-webapp-variables.sh
+          bash ./sap-automation/deploy/scripts/pipeline_scripts/v2/01-webapp-variables.sh
         env:
           CONTROL_PLANE_NAME: ${{ inputs.control_plane_name }}
 
