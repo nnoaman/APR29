@@ -34,7 +34,7 @@ jobs:
     environment: ${{ inputs.control_plane_name }}
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/nnoaman/sap-automation:github_actions
+      image: ghcr.io/nnoaman/sap-automation:kimmos_playground
     steps:
       - name: Upgrade GitHub CLI
         run: |
