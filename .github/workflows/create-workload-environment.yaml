@@ -7,7 +7,7 @@ on:
         description: "Control Plane Name configuration name, use the following syntax: ENV-LOCA-VNET"
         required: true
         type: environment
-      workload_environment:
+      workload_zone_name:
         description: "Workload environment (DEV, QA, PRD, ...)"
         required: true
         type: string
@@ -60,12 +60,17 @@ jobs:
         with:
           token: ${{ steps.get_workflow_token.outputs.token }}
 
+      - name: Configure Git Safe Directory
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git config --global --add safe.directory "/__w/${{ github.event.repository.name }}"
+
       - name: Create GitHub Workload Environment
         env:
           GH_TOKEN: ${{ steps.get_workflow_token.outputs.token }}
         run: |
           set +x
-          environment=${{ inputs.workload_environment }}
+          environment=${{ inputs.workload_zone_name }}
           region=${{ inputs.region }}
           workload_vnet=${{ inputs.workload_vnet }}
 
