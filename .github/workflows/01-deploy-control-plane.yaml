@@ -223,6 +223,8 @@ jobs:
         id: get_webapp_variables
         run: |
           cd ${SAP_AUTOMATION_REPO_PATH}
+          ls -lart
+          ls -lart deploy/scripts/pipeline_scripts/v2
           bash deploy/scripts/pipeline_scripts/v2/01-webapp-variables.sh
         env:
           CONTROL_PLANE_NAME: ${{ inputs.control_plane_name }}
@@ -234,15 +236,16 @@ jobs:
     runs-on: ${{ needs.prepare-deployer.outputs.this_agent || 'ubuntu-latest' }}
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout the code
         uses: actions/checkout@v4
         with:
-          path: sap-automation
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '7.0.x'
+          dotnet-version: '8.0.x'
 
       - name: Build Web Application
         run: |
