@@ -6,7 +6,7 @@ on:
       sap_system:
         description:                         "SAP System configuration name, use the following syntax: ENV-LOCA-VNET-SID"
         required:                            true
-        default:                             "DEV-WEEU-SAP01-X00"
+        default:                             "TEST-WEEU-SAP05-X00"
         type:                                string
       workload_zone:
         description:                         "Workload Environment ...)"
