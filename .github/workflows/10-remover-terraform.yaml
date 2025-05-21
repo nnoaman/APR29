@@ -81,7 +81,7 @@ jobs:
   remove_sap_workload_zone:
     name:                                    Remove SAP Workload Zone
     environment:                             ${{ inputs.workload_zone }}
-    if:                                      ${{ inputs.cleanup_workload_zone == 'true' }}
+    if:                                      ${{ inputs.cleanup_workload_zone }}
     runs-on:                                 self-hosted
     container:
       image:                                 ghcr.io/nnoaman/sap-automation:kimmos_playground
