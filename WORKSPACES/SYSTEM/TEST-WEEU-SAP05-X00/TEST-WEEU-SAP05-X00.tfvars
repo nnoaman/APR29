@@ -441,7 +441,7 @@ application_server_image = {
 ############################################################################################
 
 # webdispatcher_server_count defines how many web dispatchers to deploy
-webdispatcher_server_count = 1
+webdispatcher_server_count = 0
 
 # web_sid is the Web Dispatcher SID
 web_sid = "W00"
