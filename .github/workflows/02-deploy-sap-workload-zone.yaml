@@ -126,6 +126,6 @@ jobs:
           CONTROL_PLANE_NAME: ${{ inputs.control_plane_name }}
           DEPLOYER_KEYVAULT: ${{ vars.DEPLOYER_KEYVAULT }}
           inherit: ${{ inputs.inherit_settings }}
-          workload_zone_name: ${{ inputs.workload_zone_name }}
+          WORKLOAD_ZONE_NAME: ${{ inputs.workload_zone_name }}
           APP_CONFIGURATION_NAME: ${{ vars.APP_CONFIGURATION_NAME }}
 
