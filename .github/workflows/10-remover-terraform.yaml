@@ -1,4 +1,4 @@
-name:                                        SAP SID Infrastructure deployment
+name:                                        SAP Infrastructure removal
 
 on:
   workflow_dispatch:
@@ -35,7 +35,7 @@ jobs:
   remove_sap_infrastructure:
     name:                                    Remove SAP Infrastructure
     environment:                             ${{ inputs.workload_zone }}
-    if:                                      ${{ inputs.cleanup_sap == 'true' }}
+    if:                                      ${{ inputs.cleanup_sap }}
     runs-on:                                 self-hosted
     container:
       image:                                 ghcr.io/nnoaman/sap-automation:kimmos_playground
@@ -52,7 +52,6 @@ jobs:
         with:
           application_id:                    "${{ secrets.APPLICATION_ID }}"
           application_private_key:           "${{ secrets.APPLICATION_PRIVATE_KEY }}"
-
       - name:                                Azure Login with Service Principal
         if:                                  ${{ vars.USE_MSI != 'true' }}
         uses:                                Azure/Login@v2
