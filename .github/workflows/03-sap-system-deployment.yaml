@@ -69,7 +69,7 @@ jobs:
           APPLICATION_CONFIGURATION_NAME:    ${{ vars.APPLICATION_CONFIGURATION_NAME }}
           CONTROL_PLANE_NAME:                ${{ vars.CONTROL_PLANE_NAME }}
           APP_TOKEN:                         ${{ steps.get_workflow_token.outputs.token }}
-          AZURE_SUBSCRIPTION_ID:               ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ARM_SUBSCRIPTION_ID:               ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           TEST_ONLY:                         ${{ inputs.test }}
           SAP_SYSTEM_TFVARS_FILENAME:        ${{ inputs.sap_system }}.tfvars
           SAP_SYSTEM_FOLDERNAME:             ${{ inputs.sap_system }}
