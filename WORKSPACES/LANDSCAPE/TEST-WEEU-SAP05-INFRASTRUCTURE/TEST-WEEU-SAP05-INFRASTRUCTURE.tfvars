@@ -33,8 +33,7 @@ location="westeurope"
 network_logical_name="SAP05"
 
 # network_address_space is a mandatory parameter when an existing virtual network is not used
-network_address_space=["10.110.0.0/16"]
-
+network_address_space=[ "172.234.0.0/22" ]
 
 
 # use_private_endpoint is a boolean flag controlling if the key vaults and storage accounts have private endpoints
@@ -71,7 +70,7 @@ place_delete_lock_on_resources = false
 #admin_subnet_name = ""
 
 # admin_subnet_address_prefix is a mandatory parameter if the subnets are not defined in the workload or if existing subnets are not used
-admin_subnet_address_prefix="10.110.0.0/19"
+admin_subnet_address_prefix = "172.234.0.0/25"
 
 # admin_subnet_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing subnet to use
 #admin_subnet_arm_id = ""
@@ -93,7 +92,7 @@ admin_subnet_address_prefix="10.110.0.0/19"
 #db_subnet_name = ""
 
 # db_subnet_address_prefix is a mandatory parameter if the subnets are not defined in the workload or if existing subnets are not used
-db_subnet_address_prefix="10.110.96.0/19"
+db_subnet_address_prefix = "172.234.1.0/24"
 
 # db_subnet_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing subnet to use
 #db_subnet_arm_id = ""
@@ -115,7 +114,7 @@ db_subnet_address_prefix="10.110.96.0/19"
 #app_subnet_name = ""
 
 # app_subnet_address_prefix is a mandatory parameter if the subnets are not defined in the workload or if existing subnets are not used
-app_subnet_address_prefix="10.110.32.0/19"
+app_subnet_address_prefix = "172.234.2.0/24"
 
 # app_subnet_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing subnet to use
 #app_subnet_arm_id = ""
@@ -126,118 +125,6 @@ app_subnet_address_prefix="10.110.32.0/19"
 # app_subnet_nsg_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing network security group to use
 #app_subnet_nsg_arm_id = ""
 
-#########################################################################################
-#                                                                                       #
-#  Web Subnet variables                                                                 #
-#                                                                                       #
-#########################################################################################
-
-# If defined these parameters control the subnet name and the subnet prefix
-# web_subnet_name is an optional parameter and should only be used if the default naming is not acceptable
-#web_subnet_name = ""
-
-# web_subnet_address_prefix is a mandatory parameter if the subnets are not defined in the workload or if existing subnets are not used
-web_subnet_address_prefix = "172.234.3.0/25"
-
-# web_subnet_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing subnet to use
-#web_subnet_arm_id = ""
-
-# web_subnet_nsg_name is an optional parameter and should only be used if the default naming is not acceptable for the network security group name
-#web_subnet_nsg_name = ""
-
-# web_subnet_nsg_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing network security group to use
-#web_subnet_nsg_arm_id = ""
-
-#########################################################################################
-#                                                                                       #
-#  ANF Subnet variables                                                                 #
-#                                                                                       #
-#########################################################################################
-
-# If defined these parameters control the subnet name and the subnet prefix
-# anf_subnet_name is an optional parameter and should only be used if the default naming is not acceptable
-#anf_subnet_name = ""
-
-# anf_subnet_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing subnet
-#anf_subnet_arm_id = ""
-
-# ANF requires a dedicated subnet, the address space for the subnet is provided with  anf_subnet_address_prefix
-# anf_subnet_address_prefix is a mandatory parameter if the subnets are not defined in the workload or if existing subnets are not used
-#anf_subnet_address_prefix = ""
-
-# $anf_subnet_nsg_name is an optional parameter and should only be used if the default naming is not acceptable for the network security group name
-#anf_subnet_nsg_name = ""
-
-# anf_subnet_nsg_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing network security group to use
-#anf_subnet_nsg_arm_id = ""
-
-
-###########################################################################
-#                                                                         #
-#                                    ISCSI Networking                     #
-#                                                                         #
-###########################################################################
-
-# If defined these parameters control the subnet name and the subnet prefix
-# iscsi_subnet_name is an optional parameter and should only be used if the default naming is not acceptable
-#iscsi_subnet_name = ""
-
-# iscsi_subnet_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing subnet
-#iscsi_subnet_arm_id = ""
-
-# iscsi_subnet_address_prefix is a mandatory parameter if the subnets are not defined in the workload or if existing subnets are not used
-iscsi_subnet_address_prefix = "172.234.3.128/26"
-
-# iscsi_subnet_nsg_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing nsg
-#iscsi_subnet_nsg_arm_id = ""
-
-# iscsi_subnet_nsg_name is an optional parameter and should only be used if the default naming is not acceptable for the network security group name
-#iscsi_subnet_nsg_name = ""
-
-###########################################################################
-#                                                                         #
-#                               AMS Networking                            #
-#                                                                         #
-###########################################################################
-
-# If defined these parameters control the subnet name and the subnet prefix
-# ams_subnet_name is an optional parameter and should only be used if the default naming is not acceptable
-#ams_subnet_name = ""
-
-# ams_subnet_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing subnet
-#ams_subnet_arm_id = ""
-
-# ams_subnet_address_prefix is a mandatory parameter if the subnets are not defined in the workload or if existing subnets are not used
-ams_subnet_address_prefix = "172.234.0.128/26"
-
-# ams_subnet_nsg_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing nsg
-#ams_subnet_nsg_arm_id = ""
-
-# ams_subnet_nsg_name is an optional parameter and should only be used if the default naming is not acceptable for the network security group name
-#ams_subnet_nsg_name = ""
-
-
-###########################################################################
-#                                                                         #
-#                               Storage Subnet                            #
-#                                                                         #
-###########################################################################
-
-# If defined these parameters control the subnet name and the subnet prefix
-# storage_subnet_name is an optional parameter and should only be used if the default naming is not acceptable
-#storage_subnet_name = ""
-
-# storage_subnet_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing subnet
-#storage_subnet_arm_id = ""
-
-# storage_subnet_address_prefix is a mandatory parameter if the subnets are not defined in the workload or if existing subnets are not used
-storage_subnet_address_prefix = "172.234.0.192/26"
-
-# storage_subnet_nsg_arm_id is an optional parameter that if provided specifies Azure resource identifier for the existing nsg
-#storage_subnet_nsg_arm_id = ""
-
-# storage_subnet_nsg_name is an optional parameter and should only be used if the default naming is not acceptable for the network security group name
-#storage_subnet_nsg_name = ""
 
 #########################################################################################
 #                                                                                       #
