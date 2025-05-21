@@ -217,7 +217,7 @@ enable_purge_control_for_keyvaults = true
 enable_rbac_authorization_for_keyvault = true
 
 # Defines a list of Object IDs to be added to the keyvault
-additional_users_to_add_to_keyvault_policies = ["ddb52f7b-2d28-4564-ad35-98db8f3a1fa2", "ad7e0104-fa9f-4946-8f13-1a533af59ad4", "44f50425-2a7e-4dc7-802b-836711ae815d", "c0f95c7b-f3c4-4351-b2fb-7fa2034ff872", "225ff8f7-9f15-4b4c-94e0-cc423369a89f"]
+#additional_users_to_add_to_keyvault_policies = ["ddb52f7b-2d28-4564-ad35-98db8f3a1fa2", "ad7e0104-fa9f-4946-8f13-1a533af59ad4", "44f50425-2a7e-4dc7-802b-836711ae815d", "c0f95c7b-f3c4-4351-b2fb-7fa2034ff872", "225ff8f7-9f15-4b4c-94e0-cc423369a89f"]
 
 # The number of days that items should be retained in the soft delete period
 soft_delete_retention_days = 7
