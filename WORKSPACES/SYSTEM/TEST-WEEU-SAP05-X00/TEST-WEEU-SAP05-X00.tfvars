@@ -78,7 +78,7 @@ database_use_premium_v2_storage = false
 upgrade_packages = false
 
 # user_assigned_identity_id defines the user assigned identity to be assigned to the Virtual machines
-user_assigned_identity_id = "/subscriptions/8d8422a3-a9c1-4fe9-b880-adcf61557c71/resourceGroups/AzSecPackAutoConfigRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/AzSecPackAutoConfigUA-northeurope"
+# user_assigned_identity_id = "/subscriptions/8d8422a3-a9c1-4fe9-b880-adcf61557c71/resourceGroups/AzSecPackAutoConfigRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/AzSecPackAutoConfigUA-northeurope"
 
 #########################################################################################
 #                                                                                       #
@@ -407,7 +407,7 @@ app_tier_dual_nics = false
 #If you want to customize the disk sizes for application tier use the following parameter.
 #app_disk_sizes_filename = null
 
-# Optional, Defines the default authentication model for the Applicatiuon tier VMs (key/password)
+# Optional, Defines the default authentication model for the Application tier VMs (key/password)
 #app_tier_authentication_type = ""
 
 # application_server_use_ppg defines the that the application server virtual machines will be placed in a proximity placement group
