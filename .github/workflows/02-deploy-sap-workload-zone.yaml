@@ -119,7 +119,7 @@ jobs:
       - name: Deploy SAP Workload Zone
         run: |
           cd ${SAP_AUTOMATION_REPO_PATH}
-          deploy/automation/02-deploy-sap-workload-zone/01-deploy-sap-workload-zone.sh
+          deploy/automation/02/02-sap-workload-zone.sh
         env:
           APP_TOKEN: ${{ steps.get_workflow_token.outputs.token }}
           TEST_ONLY: ${{ inputs.test }}
