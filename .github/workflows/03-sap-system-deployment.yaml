@@ -1,70 +1,72 @@
-name: SAP SID Infrastructure deployment
+name:                                        SAP SID Infrastructure deployment
 
 on:
   workflow_dispatch:
     inputs:
       sap_system:
-        description: "SAP System configuration name, use the following syntax: ENV-LOCA-VNET-SID"
-        required: true
-        default: "DEV-WEEU-SAP01-X00"
-        type: string
-      deployer:
-        description: "Deployer configuration name, use the following syntax: ENV-LOCA-VNET-INFRASTRUCTURE"
-        required: true
-        type: environment
+        description:                         "SAP System configuration name, use the following syntax: ENV-LOCA-VNET-SID"
+        required:                            true
+        default:                             "DEV-WEEU-SAP01-X00"
+        type:                                string
       workload_zone:
-        description: "Workload Environment ...)"
-        required: true
-        type: environment
+        description:                         "Workload Environment ...)"
+        required:                            true
+        type:                                environment
       test:
-        description: "Test deployment without applying changes"
-        type: boolean
-        default: false
+        description:                         "Test deployment without applying changes"
+        type:                                boolean
+        default:                             false
 
 permissions:
-  contents: write
-  id-token: write
-  issues: write
+  contents:                                  write
+  id-token:                                  write
+  issues:                                    write
+
+env:
+  TF_IN_AUTOMATION:                          true
+  TF_LOG:                                    DEBUG
+  ANSIBLE_CORE_VERSION:                      '2.16'
+  TF_VERSION:                                '1.11.3'
+  USE_MSI:                                   false
 
 jobs:
   deploy_sap_infrastructure:
-    name: Deploy SAP Infrastructure
-    environment: ${{ inputs.workload_zone }}
-    runs-on: self-hosted
+    name:                                    Deploy SAP Infrastructure
+    environment:                             ${{ inputs.workload_zone }}
+    runs-on:                                 self-hosted
     container:
-      image: ghcr.io/nnoaman/sap-automation:github_actions
+      image:                                 ghcr.io/nnoaman/sap-automation:kimmos_playground
 
     steps:
-      - name: Checkout the code
-        uses: actions/checkout@v4
+      - name:                                Checkout the code
+        uses:                                actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth:                       0
 
-      - name: Get app token
-        id: get_workflow_token
-        uses: peter-murray/workflow-application-token-action@v3
+      - name:                                Get app token
+        id:                                  get_workflow_token
+        uses:                                peter-murray/workflow-application-token-action@v3
         with:
-          application_id: "${{ secrets.APPLICATION_ID }}"
-          application_private_key: "${{ secrets.APPLICATION_PRIVATE_KEY }}"
+          application_id:                    "${{ secrets.APPLICATION_ID }}"
+          application_private_key:           "${{ secrets.APPLICATION_PRIVATE_KEY }}"
 
-      - name: Azure Login
-        uses: Azure/Login@v2
+      - name:                                Azure Login with Service Principal
+        if:                                  ${{ vars.USE_MSI != 'true' }}
+        uses:                                Azure/Login@v2
         with:
-          creds: '{"clientId":"${{ secrets.WL_ARM_CLIENT_ID }}","clientSecret":"${{ secrets.WL_ARM_CLIENT_SECRET }}","subscriptionId":"${{ secrets.WL_ARM_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.WL_ARM_TENANT_ID }}"}'
+          creds:                             '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}"}'
 
-      - name: Deploy SAP Infrastructure
-        run: |
+      - name:                                Deploy SAP Infrastructure
+        run:                                 |
           cd ${SAP_AUTOMATION_REPO_PATH}
-          deploy/automation/03-sap-system-deployment/01-sap-system-deployment.sh
+          deploy/scripts/pipeline_scripts/v2/03-sap-system-deployment.sh
         env:
-          APP_TOKEN: ${{ steps.get_workflow_token.outputs.token }}
-          WL_ARM_CLIENT_ID: ${{ secrets.WL_ARM_CLIENT_ID }}
-          WL_ARM_CLIENT_SECRET: ${{ secrets.WL_ARM_CLIENT_SECRET }}
-          WL_ARM_SUBSCRIPTION_ID: ${{ secrets.WL_ARM_SUBSCRIPTION_ID }}
-          WL_ARM_TENANT_ID: ${{ secrets.WL_ARM_TENANT_ID }}
-          WL_ARM_OBJECT_ID: ${{ secrets.WL_ARM_OBJECT_ID }}
-          TEST_ONLY: ${{ inputs.test }}
-          SAP_SYSTEM_TFVARS_FILENAME: ${{ inputs.sap_system }}.tfvars
-          SAP_SYSTEM_FOLDERNAME: ${{ inputs.sap_system }}
-          DEPLOYER_FOLDER: ${{ inputs.deployer }}
-          APP_CONFIGURATION_NAME: ${{ vars.APP_CONFIGURATION_NAME }}
+          APPLICATION_CONFIGURATION_NAME:    ${{ vars.APPLICATION_CONFIGURATION_NAME }}
+          CONTROL_PLANE_NAME:                ${{ vars.CONTROL_PLANE_NAME }}
+          APP_TOKEN:                         ${{ steps.get_workflow_token.outputs.token }}
+          AZURE_SUBSCRIPTION_ID:               ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          TEST_ONLY:                         ${{ inputs.test }}
+          SAP_SYSTEM_TFVARS_FILENAME:        ${{ inputs.sap_system }}.tfvars
+          SAP_SYSTEM_FOLDERNAME:             ${{ inputs.sap_system }}
+          USE_MSI:                           ${{ env.USE_MSI }}
+          TF_VAR_use_spn:                    ${{ env.USE_MSI }}
