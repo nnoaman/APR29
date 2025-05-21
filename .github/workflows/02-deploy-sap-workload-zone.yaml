@@ -41,7 +41,7 @@ jobs:
 
   populate-keyvault:
     name: Save Deployment Credentials in Azure Keyvault
-    environment: ${{ inputs.workload_zone }}
+    environment: ${{ inputs.workload_zone_name }}
     runs-on: self-hosted
     container:
       image: ghcr.io/nnoaman/sap-automation:kimmos_playground
