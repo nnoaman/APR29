@@ -7,56 +7,56 @@
 name:                                        Deploy SAP Workload Zone
 run-name:                                    Deploy SAP Workload Zone by @${{ github.actor }}
 
-on:                                          
-  workflow_dispatch:                         
-    inputs:                                  
-      control_plane_name:                    
+on:
+  workflow_dispatch:
+    inputs:
+      control_plane_name:
         description:                         "Deployer configuration name, use the following syntax: ENV-LOCA-VNET"
         required:                            true
         type:                                environment
-      workload_zone_name:                    
+      workload_zone_name:
         description:                         "Workload zone configuration name, use the following syntax: ENV-LOCA-VNET"
         required:                            true
         type:                                environment
-      # workload_environment:                
+      # workload_environment:
       #   description:                       "Workload environment (DEV, QA, PRD, ...)"
       #   required:                          true
       #   type:                              string
       #   default:                           DEV
-      inherit_settings:                      
+      inherit_settings:
         description:                         "Inherit Terraform state file information from control plane"
         type:                                boolean
         default:                             true
-      test:                                  
+      test:
         description:                         "Test the deployment without actually deploying the resources"
         type:                                boolean
         default:                             false
 
-permissions:                                 
+permissions:
   contents:                                  write
   id-token:                                  write
   issues:                                    write
 
-jobs:                                        
+jobs:
 
-  populate-keyvault:                         
+  populate-keyvault:
     name:                                    Save Deployment Credentials in Azure Keyvault
     environment:                             ${{ inputs.workload_zone_name }}
     runs-on:                                 self-hosted
-    container:                               
+    container:
       image:                                 ghcr.io/nnoaman/sap-automation:kimmos_playground
 
-    steps:                                   
+    steps:
       - name:                                Checkout the code
         uses:                                actions/checkout@v4
-        with:                                
+        with:
           fetch-depth:                       0
           token:                             ${{ secrets.GITHUB_TOKEN }}
 
       - name:                                Get app token
         id:                                  get_workflow_token
         uses:                                peter-murray/workflow-application-token-action@v4
-        with:                                
+        with:
           application_id:                    ${{ secrets.APPLICATION_ID }}
           application_private_key:           ${{ secrets.APPLICATION_PRIVATE_KEY }}
           #organization:                     ${{ github.repository_owner }}
@@ -64,7 +64,7 @@ jobs:
       - name:                                Azure Login with Service Principal
         if:                                  ${{ vars.USE_MSI != 'true' }}
         uses:                                Azure/Login@v2
-        with:                                
+        with:
           creds:                             '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}"}'
 
       - name:                                Persist credentials
@@ -72,7 +72,7 @@ jobs:
         run:                                 |
           cd ${SAP_AUTOMATION_REPO_PATH}
           bash deploy/scripts/pipeline_scripts/v2/00-store-secrets-in-keyvault.sh
-        env:                                 
+        env:
           APPLICATION_CONFIGURATION_NAME:    ${{ vars.APPLICATION_CONFIGURATION_NAME }}
           APP_TOKEN:                         ${{ steps.get_workflow_token.outputs.token }}
           ARM_SUBSCRIPTION_ID:               ${{ secrets.AZURE_SUBSCRIPTION_ID }}
@@ -90,30 +90,30 @@ jobs:
           USE_MSI:                           ${{ env.USE_MSI }}
           ZONE:                              ${{ inputs.workload_zone_name }}
 
-  deploy_sap_workload_zone:                  
+  deploy_sap_workload_zone:
     name:                                    Deploy SAP Workload Zone
     environment:                             ${{ inputs.workload_zone_name }}
     needs:                                   [populate-keyvault]
     runs-on:                                 self-hosted
-    container:                               
+    container:
       image:                                 ghcr.io/nnoaman/sap-automation:kimmos_playground
-    steps:                                   
+    steps:
       - name:                                Checkout the code
         uses:                                actions/checkout@v4
-        with:                                
+        with:
           fetch-depth:                       0
 
       - name:                                Get app token
         id:                                  get_workflow_token
         uses:                                peter-murray/workflow-application-token-action@v4
-        with:                                
+        with:
           application_id:                    ${{ secrets.APPLICATION_ID }}
           application_private_key:           ${{ secrets.APPLICATION_PRIVATE_KEY }}
           #organization:                     ${{ github.repository_owner }}
 
       - name:                                Azure Login
         uses:                                Azure/Login@v2
-        with:                                
+        with:
           creds:                             '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}"}'
 
       - name:                                Configure Git Safe Directory
@@ -125,12 +125,13 @@ jobs:
         run:                                 |
           cd ${SAP_AUTOMATION_REPO_PATH}
           deploy/scripts/pipeline_scripts/v2/02-sap-workload-zone.sh
-        env:                                 
+        env:
+          APP_CONFIGURATION_NAME:            ${{ vars.APP_CONFIGURATION_NAME }}
           APP_TOKEN:                         ${{ steps.get_workflow_token.outputs.token }}
-          TEST_ONLY:                         ${{ inputs.test }}
+          ARM_SUBSCRIPTION_ID:               ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           CONTROL_PLANE_NAME:                ${{ inputs.control_plane_name }}
           DEPLOYER_KEYVAULT:                 ${{ vars.DEPLOYER_KEYVAULT }}
-          inherit:                           ${{ inputs.inherit_settings }}
+          TEST_ONLY:                         ${{ inputs.test }}
           WORKLOAD_ZONE_NAME:                ${{ inputs.workload_zone_name }}
-          APP_CONFIGURATION_NAME:            ${{ vars.APP_CONFIGURATION_NAME }}
+          inherit:                           ${{ inputs.inherit_settings }}
 
