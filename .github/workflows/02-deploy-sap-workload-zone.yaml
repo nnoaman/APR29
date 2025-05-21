@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
     inputs:
       control_plane_name:
-        description:                         "Deployer configuration name, use the following syntax: ENV-LOCA-VNET"
+        description:                         "Control Plane name, use the following syntax: ENV-LOCA-VNET"
         required:                            true
         type:                                environment
       workload_zone_name:
@@ -126,7 +126,7 @@ jobs:
           cd ${SAP_AUTOMATION_REPO_PATH}
           deploy/scripts/pipeline_scripts/v2/02-sap-workload-zone.sh
         env:
-          APP_CONFIGURATION_NAME:            ${{ vars.APP_CONFIGURATION_NAME }}
+          APPLICATION_CONFIGURATION_NAME:    ${{ vars.APPLICATION_CONFIGURATION_NAME }}
           APP_TOKEN:                         ${{ steps.get_workflow_token.outputs.token }}
           ARM_SUBSCRIPTION_ID:               ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           CONTROL_PLANE_NAME:                ${{ inputs.control_plane_name }}
