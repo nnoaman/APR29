@@ -402,7 +402,7 @@ ANF_qos_type = "Manual"
 ###########################################################################
 
 # Number of iSCSI devices to be created
-iscsi_count = 3
+iscsi_count = 0
 
 # Size of iSCSI Virtual Machines to be created
 iscsi_size = "Standard_D2s_v3"
