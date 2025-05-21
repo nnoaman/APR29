@@ -1,0 +1,4 @@
+{
+    "configurationType": "Discovery",
+    "centralServerVmId": "/subscriptions/d6c8e3b6-467e-452e-97c9-49d9de9e37da/resourceGroups/TEST-WEEU-SAP05-X00/providers/Microsoft.Compute/virtualMachines/TEST-WEEU-SAP05-X00_x00scs_z2_00l33b"
+}
