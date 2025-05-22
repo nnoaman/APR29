@@ -131,6 +131,7 @@ jobs:
           APPLICATION_CONFIGURATION_NAME:    ${{ vars.APPLICATION_CONFIGURATION_NAME }}
           ARM_SUBSCRIPTION_ID:               ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           ARM_TENANT_ID:                     ${{ secrets.AZURE_TENANT_ID }}
+          ARM_OBJECT_ID:                     ${{ secrets.AZURE_OBJECT_ID }}
           CONTROL_PLANE_NAME:                ${{ inputs.control_plane_name }}
           IS_PIPELINE_DEPLOYMENT:            true
           TEST_ONLY:                         ${{ inputs.test }}
