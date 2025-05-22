@@ -126,7 +126,7 @@ jobs:
         run:                                 |
           echo "Running control plane preparation"
           cd ${SAP_AUTOMATION_REPO_PATH}
-          bash deploy/scripts/pipeline_scripts/v2/01-control-plane-finalize.sh
+          bash deploy/scripts/pipeline_scripts/v2/12-remove-control-plane-finalize.sh
         env:
           APPLICATION_CONFIGURATION_NAME:    ${{ vars.APPLICATION_CONFIGURATION_NAME }}
           ARM_SUBSCRIPTION_ID:               ${{ secrets.AZURE_SUBSCRIPTION_ID }}
