@@ -26,7 +26,7 @@ permissions:
 
 env:
   TF_IN_AUTOMATION:                          true
-  TF_LOG:                                    DEBUG
+  TF_LOG:                                    OFF
   ANSIBLE_CORE_VERSION:                      '2.16'
   TF_VERSION:                                '1.11.3'
   USE_MSI:                                   false
@@ -126,9 +126,10 @@ jobs:
         run:                                 |
           echo "Running control plane preparation"
           cd ${SAP_AUTOMATION_REPO_PATH}
-          bash deploy/scripts/pipeline_scripts/v2/01-control-plane-prepare-finalize.sh
+          bash deploy/scripts/pipeline_scripts/v2/01-control-plane-finalize.sh
         env:
-          CONTROL_PLANE_NAME:                ${{ inputs.control_plane_name }}
           APPLICATION_CONFIGURATION_NAME:    ${{ vars.APPLICATION_CONFIGURATION_NAME }}
+          ARM_SUBSCRIPTION_ID:               ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          CONTROL_PLANE_NAME:                ${{ inputs.control_plane_name }}
           IS_PIPELINE_DEPLOYMENT:            true
           TEST_ONLY:                         ${{ inputs.test }}
