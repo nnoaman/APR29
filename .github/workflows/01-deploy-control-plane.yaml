@@ -82,23 +82,23 @@ jobs:
           cd ${SAP_AUTOMATION_REPO_PATH}
           bash deploy/scripts/pipeline_scripts/v2/01-control-plane-prepare.sh
         env:
-          CONTROL_PLANE_NAME:                ${{ inputs.control_plane_name }}
           APPLICATION_CONFIGURATION_NAME:    ${{ vars.APPLICATION_CONFIGURATION_NAME }}
-          FORCE_RESET:                       ${{ inputs.force_reset }}
-          IS_PIPELINE_DEPLOYMENT:            true
+          APP_TOKEN:                         ${{ steps.get_workflow_token.outputs.token }}
           ARM_CLIENT_ID:                     ${{ secrets.AZURE_CLIENT_ID }}
           ARM_CLIENT_SECRET:                 ${{ secrets.AZURE_CLIENT_SECRET }}
           ARM_SUBSCRIPTION_ID:               ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           ARM_TENANT_ID:                     ${{ secrets.AZURE_TENANT_ID }}
-          WEB_APP_CLIENT_SECRET:             ${{ secrets.WEB_APP_CLIENT_SECRET }}
+          CONTROL_PLANE_NAME:                ${{ inputs.control_plane_name }}
+          FORCE_RESET:                       ${{ inputs.force_reset }}
+          IS_PIPELINE_DEPLOYMENT:            true
           TEST_ONLY:                         ${{ inputs.test }}
           TF_VAR_agent_pool:                 'Default'
-          TF_VAR_spn_id:                     ${{ secrets.AZURE_CLIENT_ID }}
           TF_VAR_ansible_core_version:       ${{ env.ANSIBLE_CORE_VERSION }}
-          TF_VAR_tf_version:                 ${{ env.TF_VERSION }}
           TF_VAR_app_registration_app_id:    ${{ secrets.APP_REGISTRATION_APP_ID }}
-          APP_TOKEN:                         ${{ steps.get_workflow_token.outputs.token }}
-          TF_VAR_APP_TOKEN:                  ${{ steps.get_workflow_token.outputs.token }}
+          TF_VAR_github_app_token:           ${{ steps.get_workflow_token.outputs.token }}
+          TF_VAR_spn_id:                     ${{ secrets.AZURE_CLIENT_ID }}
+          TF_VAR_tf_version:                 ${{ env.TF_VERSION }}
+          WEB_APP_CLIENT_SECRET:             ${{ secrets.WEB_APP_CLIENT_SECRET }}
 
   populate-keyvault:
     name:                                    Save Deployment Credentials in Azure Keyvault
