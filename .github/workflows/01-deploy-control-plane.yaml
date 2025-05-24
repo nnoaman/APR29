@@ -130,7 +130,7 @@ jobs:
         uses:                                Azure/Login@v2
         with:
           auth-type:                         IDENTITY
-          client-id:                         ${{ vars.MSI_ID }}
+          client-id:                         07840f25-300f-4a4f-a3be-e74122f1c855
           tenant-id:                         ${{ secrets.AZURE_TENANT_ID }}
           subscription-id:                   ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
