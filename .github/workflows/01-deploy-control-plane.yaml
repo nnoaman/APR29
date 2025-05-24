@@ -124,12 +124,12 @@ jobs:
           application_private_key:           ${{ secrets.APPLICATION_PRIVATE_KEY }}
           #organization:                     ${{ github.repository_owner }}
 
-      - name:                                Azure Login using MAnaged Identity
+      - name:                                Azure Login using Managed Identity
         if:                                  ${{ vars.USE_MSI == true }}
         uses:                                Azure/Login@v2
         with:
           auth-type:                         IDENTITY
-          client-id:                         ${{ vars MSI_ID }}
+          client-id:                         ${{ vars.MSI_ID }}
           tenant-id:                         ${{ secrets.AZURE_TENANT_ID }}
 
       - name:                                Azure Login with Service Principal
