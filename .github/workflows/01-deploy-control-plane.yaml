@@ -132,6 +132,7 @@ jobs:
           auth-type:                         IDENTITY
           client-id:                         ${{ vars.MSI_ID }}
           tenant-id:                         ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id:                   ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       # - name:                                Azure Login with Service Principal
       #   if:                                  ${{ vars.USE_MSI != 'true' }}
@@ -206,6 +207,7 @@ jobs:
           auth-type:                         IDENTITY
           client-id:                         ${{ vars.MSI_ID }}
           tenant-id:                         ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id:                   ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name:                                Deploy Control Plane
         run:                                 |
