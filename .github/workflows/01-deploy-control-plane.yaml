@@ -130,9 +130,10 @@ jobs:
         uses:                                Azure/Login@v2
         with:
           auth-type:                         IDENTITY
-          client-id:                         07840f25-300f-4a4f-a3be-e74122f1c855
+          client-id:                         ${{ vars.MSI_ID }}
           tenant-id:                         ${{ secrets.AZURE_TENANT_ID }}
           subscription-id:                   ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          allow-no-subscription:              true
 
       # - name:                                Azure Login with Service Principal
       #   if:                                  ${{ vars.USE_MSI != 'true' }}
