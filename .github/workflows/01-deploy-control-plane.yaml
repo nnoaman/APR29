@@ -129,7 +129,7 @@ jobs:
         uses:                                Azure/Login@v2
         with:
           auth-type:                          IDENTITY
-          client-id:                          ${{vars MSI_ID }}
+          client-id:                          ${{ vars MSI_ID }}
           tenant-id:                          ${{ secrets.AZURE_TENANT_ID }}
 
       - name:                                Azure Login with Service Principal
