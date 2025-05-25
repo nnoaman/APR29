@@ -101,14 +101,14 @@ jobs:
           gh secret set APPLICATION_PRIVATE_KEY --body "${{ secrets.APPLICATION_PRIVATE_KEY }}" --env ${workload_config_environment_name}
 
           # Set variables
-          gh variable set ARM_CLIENT_ID --body "${{ secrets.AZURE_CLIENT_ID }}" --env ${workload_config_environment_name} --repo "$GITHUB_REPOSITORY"
-          gh variable set ARM_SUBSCRIPTION_ID --body "${{ inputs.subscription_id }}"" --env ${workload_config_environment_name} --repo "$GITHUB_REPOSITORY"
-          gh variable set ARM_TENANT_ID --body "${{ secrets.AZURE_TENANT_ID }}" --env ${workload_config_environment_name} --repo "$GITHUB_REPOSITORY"
-          gh variable set ARM_OBJECT_ID --body "${{ secrets.AZURE_OBJECT_ID }}" --env ${workload_config_environment_name} --repo "$GITHUB_REPOSITORY"
-          gh variable set APPLICATION_ID --body "${{ secrets.APPLICATION_ID }}" --env ${workload_config_environment_name} --repo "$GITHUB_REPOSITORY"
-          gh variable set APPLICATION_CONFIGURATION_NAME --body "${{ vars.APPLICATION_CONFIGURATION_NAME }}" --env ${workload_config_environment_name} --repo "$GITHUB_REPOSITORY"
-          gh variable set DEPLOYER_KEYVAULT --body "${{ vars.DEPLOYER_KEYVAULT }}" --env ${workload_config_environment_name} --repo "$GITHUB_REPOSITORY"
-          gh variable set MSI_ID --body "${{ vars.MSI_ID }}" --env ${workload_config_environment_name} --repo "$GITHUB_REPOSITORY"
+          gh variable set ARM_CLIENT_ID --body "${{ secrets.AZURE_CLIENT_ID }}" --env ${workload_config_environment_name}
+          gh variable set ARM_SUBSCRIPTION_ID --body "${{ inputs.subscription_id }}" --env ${workload_config_environment_name}
+          gh variable set ARM_TENANT_ID --body "${{ secrets.AZURE_TENANT_ID }}" --env ${workload_config_environment_name}
+          gh variable set ARM_OBJECT_ID --body "${{ secrets.AZURE_OBJECT_ID }}" --env ${workload_config_environment_name}
+          gh variable set APPLICATION_ID --body "${{ secrets.APPLICATION_ID }}" --env ${workload_config_environment_name}
+          gh variable set APPLICATION_CONFIGURATION_NAME --body "${{ vars.APPLICATION_CONFIGURATION_NAME }}" --env ${workload_config_environment_name}
+          gh variable set DEPLOYER_KEYVAULT --body "${{ vars.DEPLOYER_KEYVAULT }}" --env ${workload_config_environment_name}
+          gh variable set MSI_ID --body "${{ vars.MSI_ID }}" --env ${workload_config_environment_name}
 
           # Add WORKSPACES file
           mkdir -p WORKSPACES/LANDSCAPE/${workload_config_name^^}
