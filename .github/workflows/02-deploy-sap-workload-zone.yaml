@@ -62,8 +62,8 @@ jobs:
         with:
           auth-type:                         IDENTITY
           client-id:                         ${{ vars.MSI_ID }}
-          tenant-id:                         ${{ vars.AZURE_TENANT_ID }}
-          subscription-id:                   ${{ vars.AZURE_SUBSCRIPTION_ID }}
+          tenant-id:                         ${{ vars.ARM_TENANT_ID }}
+          subscription-id:                   ${{ vars.ARME_SUBSCRIPTION_ID }}
 
       - name:                                Persist credentials
         id:                                  parameter_validation
@@ -114,8 +114,8 @@ jobs:
         with:
           auth-type:                         IDENTITY
           client-id:                         ${{ vars.MSI_ID }}
-          tenant-id:                         ${{ vars.AZURE_TENANT_ID }}
-          subscription-id:                   ${{ vars.AZURE_SUBSCRIPTION_ID }}
+          tenant-id:                         ${{ vars.ARM_TENANT_ID }}
+          subscription-id:                   ${{ vars.ARM_SUBSCRIPTION_ID }}
 
       - name:                                Configure Git Safe Directory
         run:                                 |
