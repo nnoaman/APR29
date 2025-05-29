@@ -49,7 +49,7 @@ automation_username="azureadm"
 
 # Boolean value indicating if service endpoints should be used for the deployment
 
-use_service_endpoints = true
+use_service_endpoint = true
 
 # Boolean value indicating if private endpoint should be used for the deployment
-use_private_endpoints = true
+use_private_endpoint = true
