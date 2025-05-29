@@ -63,7 +63,7 @@ jobs:
           auth-type:                         IDENTITY
           client-id:                         ${{ vars.MSI_ID }}
           tenant-id:                         ${{ vars.ARM_TENANT_ID }}
-          subscription-id:                   ${{ vars.ARME_SUBSCRIPTION_ID }}
+          subscription-id:                   ${{ vars.ARM_SUBSCRIPTION_ID }}
 
       - name:                                Persist credentials
         id:                                  parameter_validation
