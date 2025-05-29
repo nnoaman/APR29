@@ -129,7 +129,7 @@ jobs:
         env:
           APPLICATION_CONFIGURATION_NAME:    ${{ vars.APPLICATION_CONFIGURATION_NAME }}
           APP_TOKEN:                         ${{ steps.get_workflow_token.outputs.token }}
-          ARM_SUBSCRIPTION_ID:               ${{ vars.AZURE_SUBSCRIPTION_ID }}
+          ARM_SUBSCRIPTION_ID:               ${{ vars.ARM_SUBSCRIPTION_ID }}
           CONTROL_PLANE_NAME:                ${{ inputs.control_plane_name }}
           DEPLOYER_KEYVAULT:                 ${{ vars.DEPLOYER_KEYVAULT }}
           TEST_ONLY:                         ${{ inputs.test }}
