@@ -1,5 +1,4 @@
-landscape_tfstate_key=TEST-WEEU-SAP05-INFRASTRUCTURE.terraform.tfstate
-landscape_tfstate_key_exists=false
 deployer_tfstate_key=APR29-WEEU-DEP29-INFRASTRUCTURE.terraform.tfstate
 APPLICATION_CONFIGURATION_ID=/subscriptions/d6c8e3b6-467e-452e-97c9-49d9de9e37da/resourceGroups/APR29-WEEU-DEP29-INFRASTRUCTURE/providers/Microsoft.AppConfiguration/configurationStores/apr29weeuapc159
 CONTROL_PLANE_NAME=APR29-WEEU-DEP29
+landscape_tfstate_key=TEST-WEEU-SAP05-INFRASTRUCTURE.terraform.tfstate
