@@ -46,3 +46,10 @@ app_subnet_address_prefix="10.110.32.0/19"
 
 # The automation_username defines the user account used by the automation
 automation_username="azureadm"
+
+# Boolean value indicating if service endpoints should be used for the deployment
+
+use_service_endpoints = true
+
+# Boolean value indicating if private endpoint should be used for the deployment
+use_private_endpoints = true

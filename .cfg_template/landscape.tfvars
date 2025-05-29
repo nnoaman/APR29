@@ -33,7 +33,7 @@ location="@@REGION@@"
 network_logical_name="@@VNET@@"
 
 # network_address_space is a mandatory parameter when an existing virtual network is not used
-network_address_space="10.110.0.0/16"
+network_address_space=["10.110.0.0/16"]
 
 # admin_subnet_address_prefix is a mandatory parameter if the subnets are not defined in the workload or if existing subnets are not used
 admin_subnet_address_prefix="10.110.0.0/19"
@@ -46,3 +46,10 @@ app_subnet_address_prefix="10.110.32.0/19"
 
 # The automation_username defines the user account used by the automation
 automation_username="azureadm"
+
+# Boolean value indicating if service endpoints should be used for the deployment
+
+use_service_endpoints = true
+
+# Boolean value indicating if private endpoint should be used for the deployment
+use_private_endpoints = true
