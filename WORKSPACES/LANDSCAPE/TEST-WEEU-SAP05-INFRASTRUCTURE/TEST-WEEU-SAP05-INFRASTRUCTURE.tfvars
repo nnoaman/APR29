@@ -53,3 +53,4 @@ use_service_endpoints = true
 
 # Boolean value indicating if private endpoint should be used for the deployment
 use_private_endpoints = true
+
