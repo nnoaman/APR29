@@ -29,7 +29,7 @@ permissions:
 env:
   TF_IN_AUTOMATION:                          true
   TF_LOG:                                    OFF
-  USE_MSI:                                   false
+  USE_MSI:                                   true
 
 jobs:
   remove_sap_infrastructure:
@@ -52,11 +52,14 @@ jobs:
         with:
           application_id:                    "${{ secrets.APPLICATION_ID }}"
           application_private_key:           "${{ secrets.APPLICATION_PRIVATE_KEY }}"
-      - name:                                Azure Login with Service Principal
-        if:                                  ${{ vars.USE_MSI != 'true' }}
+
+      - name:                                Azure Login using Managed Identity
         uses:                                Azure/Login@v2
         with:
-          creds:                             '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}"}'
+          auth-type:                         IDENTITY
+          client-id:                         ${{ vars.MSI_ID }}
+          tenant-id:                         ${{ vars.ARM_TENANT_ID }}
+          subscription-id:                   ${{ vars.ARM_SUBSCRIPTION_ID }}
 
       - name:                                Configure Git Safe Directory
         run:                                 |
@@ -71,7 +74,7 @@ jobs:
           APPLICATION_CONFIGURATION_NAME:    ${{ vars.APPLICATION_CONFIGURATION_NAME }}
           CONTROL_PLANE_NAME:                ${{ vars.CONTROL_PLANE_NAME }}
           APP_TOKEN:                         ${{ steps.get_workflow_token.outputs.token }}
-          ARM_SUBSCRIPTION_ID:               ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ARM_SUBSCRIPTION_ID:               ${{ vars.ARM_SUBSCRIPTION_ID }}
           SAP_SYSTEM_TFVARS_FILENAME:        ${{ inputs.sap_system }}.tfvars
           SAP_SYSTEM_FOLDERNAME:             ${{ inputs.sap_system }}
           WORKLOAD_ZONE_NAME:                ${{ inputs.workload_zone }}
@@ -99,11 +102,13 @@ jobs:
           application_id:                    "${{ secrets.APPLICATION_ID }}"
           application_private_key:           "${{ secrets.APPLICATION_PRIVATE_KEY }}"
 
-      - name:                                Azure Login with Service Principal
-        if:                                  ${{ vars.USE_MSI != 'true' }}
+      - name:                                Azure Login using Managed Identity
         uses:                                Azure/Login@v2
         with:
-          creds:                             '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}"}'
+          auth-type:                         IDENTITY
+          client-id:                         ${{ vars.MSI_ID }}
+          tenant-id:                         ${{ vars.ARM_TENANT_ID }}
+          subscription-id:                   ${{ vars.ARM_SUBSCRIPTION_ID }}
 
       - name:                                Configure Git Safe Directory
         run:                                 |
@@ -119,7 +124,7 @@ jobs:
           CONTROL_PLANE_NAME:                ${{ vars.CONTROL_PLANE_NAME }}
           WORKLOAD_ZONE_NAME:                ${{ inputs.workload_zone }}
           APP_TOKEN:                         ${{ steps.get_workflow_token.outputs.token }}
-          ARM_SUBSCRIPTION_ID:               ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ARM_SUBSCRIPTION_ID:               ${{ vars.ARM_SUBSCRIPTION_ID }}
           TEST_ONLY:                         ${{ inputs.test }}
           USE_MSI:                           ${{ env.USE_MSI }}
           TF_VAR_use_spn:                    ${{ env.USE_MSI }}

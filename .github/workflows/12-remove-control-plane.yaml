@@ -60,11 +60,13 @@ jobs:
           application_private_key:           ${{ secrets.APPLICATION_PRIVATE_KEY }}
           #organization:                     ${{ github.repository_owner }}
 
-      - name:                                Azure Login with Service Principal
-        if:                                  ${{ vars.USE_MSI != 'true' }}
+      - name:                                Azure Login using Managed Identity
         uses:                                Azure/Login@v2
         with:
-          creds:                             '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}"}'
+          auth-type:                         IDENTITY
+          client-id:                         ${{ vars.MSI_ID }}
+          tenant-id:                         ${{ vars.ARM_TENANT_ID }}
+          subscription-id:                   ${{ vars.ARM_SUBSCRIPTION_ID }}
 
       - name:                                Remove Control Plane
         run:                                 |
@@ -75,13 +77,13 @@ jobs:
           APPLICATION_CONFIGURATION_NAME:    ${{ vars.APPLICATION_CONFIGURATION_NAME }}
           APP_REGISTRATION_APP_ID:           ${{ secrets.APP_REGISTRATION_APP_ID }}
           APP_TOKEN:                         ${{ steps.get_workflow_token.outputs.token }}
-          ARM_SUBSCRIPTION_ID:               ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ARM_SUBSCRIPTION_ID:               ${{ vars.ARM_SUBSCRIPTION_ID }}
           CONTROL_PLANE_NAME:                ${{ inputs.control_plane_name }}
           DEPLOYER_KEYVAULT:                 ${{ vars.DEPLOYER_KEYVAULT }}
           DEPLOYER_TFSTATE_KEY:              "${{ inputs.control_plane_name }}-INFRASTRUCTURE.terraform.tfstate"
           IS_PIPELINE_DEPLOYMENT:            true
-          OBJECT_ID:                         ${{ secrets.AZURE_OBJECT_ID }}
-          TENANT_ID:                         ${{ secrets.AZURE_TENANT_ID }}
+          OBJECT_ID:                         ${{ vars.ARM_OBJECT_ID }}
+          TENANT_ID:                         ${{ vars.ARM_TENANT_ID }}
           TEST_ONLY:                         ${{ inputs.test }}
           TF_VAR_use_spn:                    ${{ env.USE_MSI }}
           USE_MSI:                           ${{ env.USE_MSI }}
@@ -119,7 +121,7 @@ jobs:
         if:                                  ${{ vars.USE_MSI != 'true' }}
         uses:                                Azure/Login@v2
         with:
-          creds:                             '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}"}'
+          creds:                             '{"clientId":"${{ vars.ARM_CLIENT_ID }}","clientSecret":"${{ secrets.ARM_CLIENT_SECRET }}","subscriptionId":"${{ vars.ARM_SUBSCRIPTION_ID }}","tenantId":"${{ vars.ARM_vars.ARM_TENANT_ID }}"}'
 
       - name:                                Prepare Control Plane
         id:                                  prepare_control_plane
@@ -129,9 +131,9 @@ jobs:
           bash deploy/scripts/pipeline_scripts/v2/12-remove-control-plane-finalize.sh
         env:
           APPLICATION_CONFIGURATION_NAME:    ${{ vars.APPLICATION_CONFIGURATION_NAME }}
-          ARM_SUBSCRIPTION_ID:               ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          ARM_TENANT_ID:                     ${{ secrets.AZURE_TENANT_ID }}
-          ARM_OBJECT_ID:                     ${{ secrets.AZURE_OBJECT_ID }}
+          ARM_SUBSCRIPTION_ID:               ${{ vars.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID:                     ${{ vars.ARM_TENANT_ID }}
+          ARM_OBJECT_ID:                     ${{ vars.ARM_OBJECT_ID }}
           CONTROL_PLANE_NAME:                ${{ inputs.control_plane_name }}
           IS_PIPELINE_DEPLOYMENT:            true
           TEST_ONLY:                         ${{ inputs.test }}
