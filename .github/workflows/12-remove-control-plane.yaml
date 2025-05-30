@@ -65,8 +65,8 @@ jobs:
         with:
           auth-type:                         IDENTITY
           client-id:                         ${{ vars.MSI_ID }}
-          tenant-id:                         ${{ vars.ARM_TENANT_ID }}
-          subscription-id:                   ${{ vars.ARM_SUBSCRIPTION_ID }}
+          tenant-id:                         ${{ vars.AZURE_TENANT_ID }}
+          subscription-id:                   ${{ vars.AZURE_SUBSCRIPTION_ID }}
 
       - name:                                Remove Control Plane
         run:                                 |
@@ -77,7 +77,7 @@ jobs:
           APPLICATION_CONFIGURATION_NAME:    ${{ vars.APPLICATION_CONFIGURATION_NAME }}
           APP_REGISTRATION_APP_ID:           ${{ secrets.APP_REGISTRATION_APP_ID }}
           APP_TOKEN:                         ${{ steps.get_workflow_token.outputs.token }}
-          ARM_SUBSCRIPTION_ID:               ${{ vars.ARM_SUBSCRIPTION_ID }}
+          ARM_SUBSCRIPTION_ID:               ${{ vars.AZURE_SUBSCRIPTION_ID }}
           CONTROL_PLANE_NAME:                ${{ inputs.control_plane_name }}
           DEPLOYER_KEYVAULT:                 ${{ vars.DEPLOYER_KEYVAULT }}
           DEPLOYER_TFSTATE_KEY:              "${{ inputs.control_plane_name }}-INFRASTRUCTURE.terraform.tfstate"
