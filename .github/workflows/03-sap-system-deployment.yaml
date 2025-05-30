@@ -75,5 +75,4 @@ jobs:
           TEST_ONLY:                         ${{ inputs.test }}
           SAP_SYSTEM_TFVARS_FILENAME:        ${{ inputs.sap_system }}.tfvars
           SAP_SYSTEM_FOLDERNAME:             ${{ inputs.sap_system }}
-          USE_MSI:                           ${{ false }}
-          TF_VAR_use_spn:                    ${{ env.USE_MSI }}
+          USE_MSI:                           ${{ env.USE_MSI }}
