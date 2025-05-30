@@ -48,8 +48,16 @@ app_subnet_address_prefix="10.110.32.0/19"
 automation_username="azureadm"
 
 # Boolean value indicating if service endpoints should be used for the deployment
-
 use_service_endpoints = true
 
 # Boolean value indicating if private endpoint should be used for the deployment
 use_private_endpoints = true
+
+# Defines if access to the key vaults and storage accounts is restricted to the SAP and deployer VNets
+enable_firewall_for_keyvaults_and_storage = true
+
+# Defines if public access is allowed for the storage accounts and key vaults
+public_network_access_enabled = false
+
+# enable_rbac_authorization_for_keyvault Controls the access policy model for the workload zone keyvault.
+enable_rbac_authorization_for_keyvault = true
